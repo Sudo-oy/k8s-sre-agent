@@ -1,0 +1,273 @@
+{
+  "namespace": "shop",
+  "pods": [
+    {
+      "name": "checkout-7c9d8f6b5-abcde",
+      "namespace": "shop",
+      "phase": "Running",
+      "workload": "Deployment/checkout",
+      "node_name": "demo-worker",
+      "conditions": [],
+      "containers": [
+        {
+          "name": "app",
+          "image": "ghcr.io/example/checkout:1.4.0",
+          "ready": false,
+          "restart_count": 6,
+          "state": "waiting",
+          "reason": "CrashLoopBackOff",
+          "message": "back-off 5m0s restarting failed container",
+          "exit_code": null,
+          "last_state_reason": "Error",
+          "last_exit_code": 1,
+          "memory_limit": null,
+          "cpu_limit": null
+        }
+      ],
+      "init_containers": []
+    },
+    {
+      "name": "checkout-7c9d8f6b5-fghij",
+      "namespace": "shop",
+      "phase": "Running",
+      "workload": "Deployment/checkout",
+      "node_name": "demo-worker",
+      "conditions": [],
+      "containers": [
+        {
+          "name": "app",
+          "image": "ghcr.io/example/checkout:1.4.0",
+          "ready": false,
+          "restart_count": 5,
+          "state": "waiting",
+          "reason": "CrashLoopBackOff",
+          "message": null,
+          "exit_code": null,
+          "last_state_reason": "Error",
+          "last_exit_code": 1,
+          "memory_limit": null,
+          "cpu_limit": null
+        }
+      ],
+      "init_containers": []
+    },
+    {
+      "name": "cache-0",
+      "namespace": "shop",
+      "phase": "Running",
+      "workload": "StatefulSet/cache",
+      "node_name": "demo-worker",
+      "conditions": [],
+      "containers": [
+        {
+          "name": "redis",
+          "image": "redis:7.4",
+          "ready": true,
+          "restart_count": 4,
+          "state": "running",
+          "reason": null,
+          "message": null,
+          "exit_code": null,
+          "last_state_reason": "OOMKilled",
+          "last_exit_code": 137,
+          "memory_limit": "64Mi",
+          "cpu_limit": null
+        }
+      ],
+      "init_containers": []
+    },
+    {
+      "name": "frontend-5b6c7d8e9-klmno",
+      "namespace": "shop",
+      "phase": "Pending",
+      "workload": "Deployment/frontend",
+      "node_name": "demo-worker",
+      "conditions": [],
+      "containers": [
+        {
+          "name": "web",
+          "image": "ghcr.io/example/frontend:does-not-exist",
+          "ready": false,
+          "restart_count": 0,
+          "state": "waiting",
+          "reason": "ImagePullBackOff",
+          "message": "Back-off pulling image \"ghcr.io/example/frontend:does-not-exist\"",
+          "exit_code": null,
+          "last_state_reason": null,
+          "last_exit_code": null,
+          "memory_limit": null,
+          "cpu_limit": null
+        }
+      ],
+      "init_containers": []
+    },
+    {
+      "name": "worker-6d5f4c3b2-pqrst",
+      "namespace": "shop",
+      "phase": "Pending",
+      "workload": "Deployment/worker",
+      "node_name": "demo-worker",
+      "conditions": [],
+      "containers": [
+        {
+          "name": "worker",
+          "image": "busybox:1.36",
+          "ready": false,
+          "restart_count": 0,
+          "state": "waiting",
+          "reason": "CreateContainerConfigError",
+          "message": "configmap \"worker-config\" not found",
+          "exit_code": null,
+          "last_state_reason": null,
+          "last_exit_code": null,
+          "memory_limit": null,
+          "cpu_limit": null
+        }
+      ],
+      "init_containers": []
+    },
+    {
+      "name": "reports-8f7e6d5c4-uvwxy",
+      "namespace": "shop",
+      "phase": "Pending",
+      "workload": "Deployment/reports",
+      "node_name": null,
+      "conditions": [
+        {
+          "type": "PodScheduled",
+          "status": "False",
+          "reason": "Unschedulable",
+          "message": "0/1 nodes are available: 1 Insufficient memory. preemption: 0/1 nodes are available: 1 No preemption victims found for incoming pod."
+        }
+      ],
+      "containers": [
+        {
+          "name": "reports",
+          "image": "busybox:1.36",
+          "ready": false,
+          "restart_count": 0,
+          "state": "unknown",
+          "reason": null,
+          "message": null,
+          "exit_code": null,
+          "last_state_reason": null,
+          "last_exit_code": null,
+          "memory_limit": null,
+          "cpu_limit": null
+        }
+      ],
+      "init_containers": []
+    },
+    {
+      "name": "api-5d4c3b2a1-zzzzz",
+      "namespace": "shop",
+      "phase": "Running",
+      "workload": "Deployment/api",
+      "node_name": "demo-worker",
+      "conditions": [],
+      "containers": [
+        {
+          "name": "api",
+          "image": "nginx:1.27",
+          "ready": false,
+          "restart_count": 0,
+          "state": "running",
+          "reason": null,
+          "message": null,
+          "exit_code": null,
+          "last_state_reason": null,
+          "last_exit_code": null,
+          "memory_limit": null,
+          "cpu_limit": null
+        }
+      ],
+      "init_containers": []
+    }
+  ],
+  "events": [
+    {
+      "type": "Warning",
+      "reason": "Failed",
+      "message": "Failed to pull image \"ghcr.io/example/frontend:does-not-exist\": rpc error: code = NotFound desc = failed to resolve reference: ghcr.io/example/frontend:does-not-exist: not found",
+      "involved_kind": "Pod",
+      "involved_name": "frontend-5b6c7d8e9-klmno",
+      "count": 4
+    },
+    {
+      "type": "Warning",
+      "reason": "BackOff",
+      "message": "Back-off restarting failed container app in pod checkout-7c9d8f6b5-abcde",
+      "involved_kind": "Pod",
+      "involved_name": "checkout-7c9d8f6b5-abcde",
+      "count": 20
+    },
+    {
+      "type": "Warning",
+      "reason": "Unhealthy",
+      "message": "Readiness probe failed: HTTP probe failed with statuscode: 404",
+      "involved_kind": "Pod",
+      "involved_name": "api-5d4c3b2a1-zzzzz",
+      "count": 31
+    }
+  ],
+  "deployments": [
+    {
+      "name": "checkout",
+      "namespace": "shop",
+      "replicas": 2,
+      "ready_replicas": 0,
+      "available_replicas": 0,
+      "updated_replicas": 2,
+      "conditions": [
+        {
+          "type": "Progressing",
+          "status": "False",
+          "reason": "ProgressDeadlineExceeded",
+          "message": "ReplicaSet \"checkout-7c9d8f6b5\" has timed out progressing."
+        }
+      ]
+    },
+    {
+      "name": "frontend",
+      "namespace": "shop",
+      "replicas": 1,
+      "ready_replicas": 0,
+      "available_replicas": 0,
+      "updated_replicas": 1,
+      "conditions": []
+    },
+    {
+      "name": "healthy",
+      "namespace": "shop",
+      "replicas": 2,
+      "ready_replicas": 2,
+      "available_replicas": 2,
+      "updated_replicas": 2,
+      "conditions": []
+    }
+  ],
+  "nodes": [
+    {
+      "name": "demo-worker",
+      "unschedulable": false,
+      "conditions": [
+        {
+          "type": "Ready",
+          "status": "True",
+          "reason": "KubeletReady",
+          "message": "kubelet is posting ready status"
+        },
+        {
+          "type": "MemoryPressure",
+          "status": "False",
+          "reason": null,
+          "message": null
+        }
+      ]
+    }
+  ],
+  "logs": {
+    "checkout-7c9d8f6b5-abcde/app": "starting checkout service\nconnecting to postgres://checkout:hunter2@db:5432/shop\nFATAL: environment variable PAYMENT_API_URL is not set\n"
+  },
+  "warnings": []
+}
