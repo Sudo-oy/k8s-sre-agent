@@ -1,0 +1,8 @@
+[
+  { "detector": "crash-loop", "severity": "critical", "workload": "Deployment/checkout" },
+  { "detector": "oom-killed", "severity": "critical", "workload": "Deployment/cache" },
+  { "detector": "image-pull", "severity": "critical", "workload": "Deployment/frontend" },
+  { "detector": "config-error", "severity": "critical", "workload": "Deployment/worker" },
+  { "detector": "unschedulable", "severity": "critical", "workload": "Deployment/reports" },
+  { "detector": "probe-failure", "severity": "warning", "workload": "Deployment/api" }
+]
