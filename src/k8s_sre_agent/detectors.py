@@ -25,9 +25,12 @@ EXIT_CODE_HINTS = {
     2: "the command was misused (bad arguments or shell syntax)",
     126: "the entrypoint is not executable (permissions or wrong binary architecture)",
     127: "the entrypoint command was not found in the image",
+    128: "the process called exit() with an invalid argument",
+    134: "the process aborted with SIGABRT (assertion failure or abort())",
     137: "the process was killed with SIGKILL (out of memory or a failed liveness probe)",
     139: "the process crashed with a segmentation fault",
     143: "the process received SIGTERM (liveness probe failure or eviction)",
+    255: "the exit status is out of range (often a wrapper script or unsigned 8-bit overflow)",
 }
 
 IMAGE_PULL_REASONS = {"ImagePullBackOff", "ErrImagePull", "InvalidImageName", "ErrImageNeverPull"}
