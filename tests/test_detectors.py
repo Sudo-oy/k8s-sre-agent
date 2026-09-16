@@ -1,11 +1,15 @@
 from __future__ import annotations
 
-from k8s_sre_agent.detectors import run_detectors
+import pytest
+
+from k8s_sre_agent.detectors import EXIT_CODE_HINTS, run_detectors
 from k8s_sre_agent.models import (
     ClusterSnapshot,
     Condition,
+    ContainerSnapshot,
     DeploymentSnapshot,
     NodeSnapshot,
+    PodSnapshot,
     Severity,
 )
 
@@ -129,3 +133,35 @@ def test_node_not_ready_is_critical() -> None:
 
 def test_snapshot_round_trip(incident_snapshot: ClusterSnapshot) -> None:
     assert ClusterSnapshot.from_dict(incident_snapshot.to_dict()) == incident_snapshot
+
+
+@pytest.mark.parametrize(
+    "exit_code",
+    [1, 2, 126, 127, 128, 134, 137, 139, 143, 255],
+)
+def test_exit_code_hint_is_used_in_crash_loop(exit_code: int) -> None:
+    snapshot = ClusterSnapshot(
+        namespace="shop",
+        pods=[
+            PodSnapshot(
+                name="worker-0",
+                namespace="shop",
+                phase="Running",
+                workload="Deployment/worker",
+                containers=[
+                    ContainerSnapshot(
+                        name="app",
+                        image="app:1",
+                        reason="CrashLoopBackOff",
+                        restart_count=3,
+                        last_exit_code=exit_code,
+                        last_state_reason="Error",
+                    )
+                ],
+            )
+        ],
+    )
+    findings = [f for f in run_detectors(snapshot) if f.detector == "crash-loop"]
+    assert findings, f"expected crash-loop finding for exit code {exit_code}"
+    hint = EXIT_CODE_HINTS[exit_code]
+    assert f"Exit code {exit_code}: {hint}." == findings[0].probable_cause
